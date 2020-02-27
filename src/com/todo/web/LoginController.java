@@ -1,37 +1,34 @@
 package com.todo.web;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 
-import com.todo.dao.UserDao;
-import com.todo.model.User;
+import com.todo.dao.LoginDao;
+import com.todo.model.LoginModel;
 
 /**
- * Servlet implementation class UserController
+ * Servlet implementation class LoginController
  */
-@WebServlet("/register")
-public class UserController extends HttpServlet {
+@WebServlet("/Login")
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private UserDao userDao;
+    private LoginDao loginDao;
     /**
      * @see HttpServlet#HttpServlet()
      */
    
-
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		
-		userDao = new UserDao();
-		
+		loginDao = new LoginDao();
 	}
 
 	/**
@@ -46,41 +43,27 @@ public class UserController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		authenticate(request,response);
+		
 	}
 	
-	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {  
-	
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
+	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
-		User employee = new User();
-		employee.setFirstName(firstName);
-		employee.setLastName(lastName);
-		employee.setUserName(username);
-		employee.setPassword(password);
+		LoginModel loginModel = new LoginModel();
+		loginModel.setUsername(username);
+		loginModel.setPassword(password);
 		
 		try {
-			
-			int result = userDao.registerEmployee(employee);
-			if (result == 1) {
-				request.setAttribute("NOTIFICATION", "User regiestered succefully");
+			if(loginDao.validate(loginModel)) {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				HttpSession session = request.getSession();
 			}
-			
-		} catch (Exception e) {
-			
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("register/register.jsp");
-		dispatcher.forward(request, response);
-		
-		
-		
 	}
-	
 
 }
