@@ -21,8 +21,7 @@ public class TodoImpl implements TodoDao {
 	private static final String DELETE_TODO_BY_ID = "delete from todos where id = ?;";
 	private static final String UPDATE_TODO = "update todos set title = ?, username= ?, descritpion =?, target_date =?, is_done = ? where id = ?;";
 
-	public TodoDaoImpl() {		
-	}
+	public TodoImpl() {		}
 	
 	public void insertTodo(Todo todo) throws SQLException {
 		System.out.println(INSERT_TODOS_SQL);
@@ -33,7 +32,7 @@ public class TodoImpl implements TodoDao {
 			preparedStatement.setString(2, todo.getUsername());
 			preparedStatement.setString(3, todo.getDescription());
 			preparedStatement.setDate(4, JDBCUtils.getSQLDate(todo.getTargetDate()));
-			preparedStatement.setBoolean(5, todo.getStatus(false));
+			preparedStatement.setBoolean(5, todo.getStatus());
 			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 		} catch (SQLException exception) {
