@@ -16,7 +16,7 @@ public class LoginDao {
 		
 		try (Connection connection = JDBCUtils.getConnection();
 				
-			PreparedStatement preparedStatement = connection.prepareStatement("select * users where username = ? and password = ? ")) {
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from users where username = ? and password = ? ")) {
 			preparedStatement.setString(1, loginModel.getUsername());
 			preparedStatement.setString(2, loginModel.getPassword());
 			

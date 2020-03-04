@@ -11,7 +11,7 @@ public class UserDao {
 	
 	public int registerEmployee(User employee) throws ClassNotFoundException {
 		
-		String INSERT_USERS_SQL = "INSERT INTO USERS" + " (first_name, last_name, username; password VALUES " + 
+		String INSERT_USERS_SQL = "INSERT INTO USERS" + " (first_name, last_name, username, password) VALUES " + 
 		" (?, ?, ?, ?);";
 		
 		int result = 0; 

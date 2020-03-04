@@ -46,6 +46,13 @@ public class todoController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
 		
@@ -82,27 +89,24 @@ public class todoController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	
 	
 	private void listTodo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException,ServletException {
 		List < Todo > listTodo = todoDAO.selectAllTodos();
 		request.setAttribute("listTodo", listTodo);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("todolist.jsp");
 		dispatcher.forward(request, response);
 	}
 	
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("todoform.jsp");
 		dispatcher.forward(request, response);
 	}
 	
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Todo existingTodo = todoDAO.selectTodo(id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("todoform.jsp");
 		request.setAttribute("todo", existingTodo);
 		dispatcher.forward(request, response);		
 	}
