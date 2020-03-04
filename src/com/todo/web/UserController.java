@@ -39,7 +39,7 @@ public class UserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.sendRedirect("login/login.jsp");
+		response.sendRedirect("register.jsp");
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class UserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		register(request, response);
 	}
 	
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {  
@@ -75,7 +75,7 @@ public class UserController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("register/register.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
 		dispatcher.forward(request, response);
 		
 		
